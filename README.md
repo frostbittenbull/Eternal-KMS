@@ -35,9 +35,7 @@ python main.py
 ```
 
 > **Зависимости:** `customtkinter`
-
 > **Требуется:** `TSforge.exe`, `LibTSforge.dll` и `TSforge.exe.config` в папке с приложением
-
 > ⚠️ **Запускать от имени администратора**
 
 ---
