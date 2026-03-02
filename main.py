@@ -176,7 +176,7 @@ class WindowsActivator(ctk.CTk):
     def _start_activation(self):
         self.activate_btn.configure(state="disabled")
         self._set_status("working")
-        self.log("  Запуск TSforge…")
+        self.log("\n  Запуск TSforge…\n")
         cmd = f'"{self.tsforge_exe}" /kms4k'
         self.run_command(cmd)
 
