@@ -26,8 +26,8 @@
 ### Вариант 2 — из исходников:
 
 ```bash
-git clone [https://github.com/frostbittenbull/RedStream.git](https://github.com/frostbittenbull/Eternal-KMS)
-cd RedStream
+git clone https://github.com/frostbittenbull/Eternal-KMS.git
+cd Eternal-KMS
 curl -L https://github.com/massgravel/TSforge/releases/download/1.1.1/TSforge-1.1.1.zip -o tsforge.zip
 tar -xf tsforge.zip
 del tsforge.zip
