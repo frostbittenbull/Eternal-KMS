@@ -1,4 +1,5 @@
 # Eternal KMS: Windows Activator
+![Preview](Preview.png)
 ## ⚡ Простой и удобный активатор Windows на 4085 лет
 
 **Eternal KMS** — десктопное приложение для Windows с минималистичным тёмным интерфейсом, позволяющее активировать Windows одним нажатием. Построено на базе [TSforge](https://github.com/asdcorp/TSforge) и [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter).
@@ -42,7 +43,7 @@ python main.py
 
 ## 🖼️ Скриншот:
 
-![Preview](Preview.png)
+![Preview](Screenshot.png)
 
 ---
 
