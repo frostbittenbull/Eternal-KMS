@@ -22,7 +22,7 @@ class WindowsActivator(ctk.CTk):
         super().__init__()
 
         self.title("Eternal KMS")
-        self.geometry("520x420")
+        self.geometry("520x460")
         self.resizable(False, False)
         self.configure(fg_color="#0d0d0f")
 
@@ -87,9 +87,8 @@ class WindowsActivator(ctk.CTk):
         self.console_box.pack(fill="both", expand=True)
         self.console_box.configure(state="disabled")
 
-        bottom = ctk.CTkFrame(self, fg_color="#0d0d0f", corner_radius=0, height=46)
+        bottom = ctk.CTkFrame(self, fg_color="#0d0d0f", corner_radius=0)
         bottom.pack(fill="x", side="bottom", padx=12, pady=(0, 10))
-        bottom.pack_propagate(False)
 
         self.activate_btn = ctk.CTkButton(
             bottom,
@@ -103,22 +102,35 @@ class WindowsActivator(ctk.CTk):
             border_width=0,
             command=self._start_activation,
         )
-        self.activate_btn.pack(side="left", fill="x", expand=True, padx=(0, 6))
+        self.activate_btn.pack(fill="x", pady=(0, 4))
 
-        self.exit_btn = ctk.CTkButton(
+        self.office_btn = ctk.CTkButton(
             bottom,
-            text="✕",
-            font=("Courier New", 12, "bold"),
-            fg_color="#7f1d1d",
-            hover_color="#b91c1c",
-            text_color="#fca5a5",
+            text="⚡  Активировать Office на 4085 лет",
+            font=("Courier New", 11, "bold"),
+            fg_color="#2e2e2e",
+            hover_color="#3d3d3d",
+            text_color="#ffffff",
             corner_radius=6,
             height=28,
-            width=28,
             border_width=0,
-            command=self.destroy,
+            command=self._start_office_activation,
         )
-        self.exit_btn.pack(side="right")
+        self.office_btn.pack(fill="x", pady=(0, 4))
+
+        self.all_btn = ctk.CTkButton(
+            bottom,
+            text="⚡  Активировать всё сразу на 4085 лет",
+            font=("Courier New", 11, "bold"),
+            fg_color="#1e2a1e",
+            hover_color="#2a3d2a",
+            text_color="#a3e6a3",
+            corner_radius=6,
+            height=28,
+            border_width=0,
+            command=self._start_all_activation,
+        )
+        self.all_btn.pack(fill="x")
 
     def _animate_intro(self):
         lines = [
@@ -145,7 +157,17 @@ class WindowsActivator(ctk.CTk):
         self.stripe.configure(fg_color=dot_color)
         self.activate_btn.configure(fg_color=btn_color, hover_color=hover_color)
 
-    def run_command(self, cmd_string):
+    def _disable_all_buttons(self):
+        self.activate_btn.configure(state="disabled")
+        self.office_btn.configure(state="disabled")
+        self.all_btn.configure(state="disabled")
+
+    def _enable_all_buttons(self):
+        self.activate_btn.configure(state="normal")
+        self.office_btn.configure(state="normal")
+        self.all_btn.configure(state="normal")
+
+    def run_command(self, cmd_string, flag=None):
         def target():
             try:
                 process = subprocess.Popen(
@@ -161,10 +183,10 @@ class WindowsActivator(ctk.CTk):
                     self.after(0, self.log, line.strip())
                 process.wait()
 
-                if "kms4k" in cmd_string:
+                if flag in ("kms4k", "kms4o", "kms4all"):
                     self.after(0, self.log, "\n  Проверка статуса…")
                     self.run_command("cscript //nologo C:\\Windows\\System32\\slmgr.vbs /xpr")
-                    self.after(0, lambda: self.activate_btn.configure(state="normal"))
+                    self.after(0, self._enable_all_buttons)
                     self.after(0, lambda: self._set_status("done"))
                     self.after(0, self.log, "  ✓ Готово.\n")
 
@@ -174,11 +196,25 @@ class WindowsActivator(ctk.CTk):
         threading.Thread(target=target, daemon=True).start()
 
     def _start_activation(self):
-        self.activate_btn.configure(state="disabled")
+        self._disable_all_buttons()
         self._set_status("working")
-        self.log("\n  Запуск TSforge…\n")
+        self.log("\n  Запуск TSforge (Windows)…\n")
         cmd = f'"{self.tsforge_exe}" /kms4k'
-        self.run_command(cmd)
+        self.run_command(cmd, flag="kms4k")
+
+    def _start_office_activation(self):
+        self._disable_all_buttons()
+        self._set_status("working")
+        self.log("\n  Запуск TSforge (Office)…\n")
+        cmd = f'"{self.tsforge_exe}" /kms4o'
+        self.run_command(cmd, flag="kms4o")
+
+    def _start_all_activation(self):
+        self._disable_all_buttons()
+        self._set_status("working")
+        self.log("\n  Запуск TSforge (всё)…\n")
+        cmd = f'"{self.tsforge_exe}" /kms4all'
+        self.run_command(cmd, flag="kms4all")
 
 if __name__ == "__main__":
     app = WindowsActivator()
